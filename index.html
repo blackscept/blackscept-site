@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BLACKSCEPT | Offensive Security & Digital Intelligence</title>
+<meta name="description" content="BLACKSCEPT works at the intersection of offensive security and digital intelligence: web application security, penetration testing, vulnerability research and OSINT.">
+<meta name="theme-color" content="#0a0a0b">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,300..700&family=Newsreader:opsz,wght@6..72,300..500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0b; --ink:#ecebe6; --soft:#c4c3be; --steel:#8f9196;
+  --line:rgba(143,145,150,.2); --crimson:#a3162b;
+  --head:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --body:"Newsreader",Georgia,"Times New Roman",serif;
+  --wrap:min(1200px,100% - 3rem);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg);scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:1.15rem;line-height:1.65;-webkit-font-smoothing:antialiased}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+.skip{position:absolute;left:1rem;top:-4rem;background:var(--ink);color:var(--bg);padding:.6rem 1rem;font-family:var(--head);z-index:20}
+.skip:focus{top:1rem}
+
+/* architectural grid, fixed behind everything */
+.grid{position:fixed;inset:0 auto 0 50%;width:var(--wrap);transform:translateX(-50%);pointer-events:none;z-index:0;
+  background:linear-gradient(to right,var(--line) 1px,transparent 1px) 0 0/calc(100%/6) 100%;
+  border-right:1px solid var(--line);opacity:.55}
+.wrap{width:var(--wrap);margin-inline:auto;position:relative;z-index:1}
+main,header,footer{position:relative;z-index:1}
+
+/* header */
+header{position:absolute;top:0;left:0;right:0;z-index:5;padding:1.6rem 0}
+nav{width:var(--wrap);margin-inline:auto;display:flex;justify-content:flex-end;gap:clamp(1rem,3vw,2.2rem);flex-wrap:wrap;font-family:var(--head);font-size:.82rem;letter-spacing:.04em}
+nav a{text-decoration:none;color:var(--steel);padding:.3rem 0;background:linear-gradient(var(--ink),var(--ink)) 0 100%/0 1px no-repeat;transition:color .3s,background-size .35s}
+nav a:hover{color:var(--ink);background-size:100% 1px}
+
+/* hero */
+.hero{min-height:100svh;display:flex;align-items:center;padding:7rem 0 5rem;position:relative;overflow:hidden}
+.hero .wrap{width:var(--wrap)}
+.logo{width:min(640px,100%);height:auto;margin-bottom:clamp(2.5rem,7vh,4.5rem)}
+h1{font-family:var(--head);font-weight:500;font-stretch:115%;font-size:clamp(2.2rem,5.6vw,4.6rem);line-height:1.05;letter-spacing:-.015em;max-width:14ch}
+.lede{max-width:34rem;margin:1.8rem 0 2.6rem;color:var(--soft);font-size:1.2rem}
+.cta{display:inline-flex;align-items:center;gap:.9rem;font-family:var(--head);font-size:.9rem;letter-spacing:.04em;text-decoration:none;padding:.95rem 1.5rem;border:1px solid var(--steel);transition:border-color .3s,background-color .3s}
+.cta i{width:7px;height:7px;background:var(--crimson);transition:transform .35s}
+.cta:hover{border-color:var(--ink);background:rgba(236,235,230,.05)}
+.cta:hover i{transform:rotate(45deg)}
+.geo{position:absolute;z-index:0;right:max(1.5rem,calc((100% - 1200px)/2));top:50%;width:min(46vw,580px);transform:translateY(-50%);
+  -webkit-mask-image:radial-gradient(closest-side,#000 55%,transparent 100%);mask-image:radial-gradient(closest-side,#000 55%,transparent 100%)}
+.geo *{fill:none;stroke:var(--steel);stroke-width:1}
+.geo .bg{stroke-opacity:.14}
+.geo .in{stroke-opacity:.35}
+.geo .break{fill:var(--crimson);stroke:none}
+
+/* hero load sequence: the only non-interactive motion on the page */
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes draw{to{stroke-dashoffset:0}}
+.hero .logo,.hero h1,.hero .lede,.hero .cta{opacity:0;animation:fade .9s ease forwards}
+.hero .logo{animation-delay:.1s}.hero h1{animation-delay:.45s}.hero .lede{animation-delay:.75s}.hero .cta{animation-delay:1.05s}
+.geo .bg{opacity:0;animation:fade 1.4s .2s ease forwards}
+.geo .draw{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 2.2s .6s cubic-bezier(.6,0,.2,1) forwards}
+.geo .break{opacity:0;animation:fade .6s 2.7s ease forwards}
+
+/* sections */
+section.s{border-top:1px solid var(--line);padding:clamp(4rem,10vw,7.5rem) 0}
+.s .wrap{display:grid;grid-template-columns:1fr 2fr;gap:2rem 3rem}
+h2{font-family:var(--head);font-weight:500;font-stretch:112%;font-size:clamp(1.4rem,2.6vw,1.9rem);line-height:1.2;letter-spacing:-.005em}
+.lead{font-size:clamp(1.35rem,2.6vw,1.85rem);line-height:1.4;color:var(--ink);max-width:34ch;margin-bottom:2.5rem;font-weight:300}
+p{color:var(--soft);max-width:58ch}
+h3{font-family:var(--head);font-weight:600;font-size:1rem;letter-spacing:.01em;color:var(--ink);margin-bottom:.4rem}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+.cols p{font-size:1.05rem}
+.cols>div{border-top:1px solid var(--line);padding-top:1.2rem}
+.rows{list-style:none}
+.rows li{display:grid;grid-template-columns:1fr 1.4fr;gap:.5rem 2rem;padding:1.6rem 0;border-top:1px solid var(--line);position:relative;transition:padding-left .35s}
+.rows li:first-child{border-top:0;padding-top:0}
+.rows li::before{content:"";position:absolute;left:0;top:2.15rem;width:0;height:1px;background:var(--crimson);transition:width .35s}
+.rows li:first-child::before{top:.7rem}
+.rows li:hover{padding-left:1.6rem}
+.rows li:hover::before{width:1rem}
+.rows h3{font-size:1.1rem;margin:0}
+.rows p{font-size:1.05rem}
+.status{font-family:var(--head);font-size:.8rem;letter-spacing:.04em;color:var(--steel);white-space:nowrap}
+.rows.research li{grid-template-columns:1fr 1.4fr auto;align-items:baseline}
+.princ{display:grid;grid-template-columns:repeat(2,1fr);gap:0 3rem;list-style:none}
+.princ li{padding:1.4rem 0;border-top:1px solid var(--line)}
+.princ p{font-size:1.05rem}
+
+/* closing */
+.close{padding:clamp(5rem,12vw,9rem) 0}
+.close .wrap{display:block}
+.close h2{font-size:clamp(1.9rem,4.8vw,3.8rem);font-stretch:115%;line-height:1.12;max-width:16ch;margin-bottom:3rem}
+.close h2 span{display:block}
+.close h2 span:nth-child(n+2){color:var(--steel)}
+.mail{font-family:var(--head);font-size:1rem;text-decoration:none;display:inline-block;padding-bottom:.35rem;border-bottom:1px solid var(--steel);transition:border-color .3s,letter-spacing .35s}
+.mail:hover{border-color:var(--crimson);letter-spacing:.03em}
+footer{border-top:1px solid var(--line);padding:2rem 0 2.5rem;font-family:var(--head);font-size:.8rem;color:var(--steel)}
+footer .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+
+@media (max-width:860px){
+  .grid{background-size:calc(100%/3) 100%}
+  .s .wrap{grid-template-columns:1fr}
+  .cols,.princ{grid-template-columns:1fr}
+  .rows li,.rows.research li{grid-template-columns:1fr}
+  .geo{width:96vw;right:-22%;opacity:.4}
+  header{padding:1.1rem 0}
+  nav{justify-content:flex-start}
+  .hero{padding-top:8rem}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .hero .logo,.hero h1,.hero .lede,.hero .cta,.geo .bg,.geo .break{opacity:1}
+  .geo .draw{stroke-dashoffset:0}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="grid" aria-hidden="true"></div>
+
+<header>
+  <nav aria-label="Primary">
+    <a href="#philosophy">Philosophy</a>
+    <a href="#capabilities">Capabilities</a>
+    <a href="#research">Research</a>
+    <a href="#principles">Principles</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-title">
+    <!-- Abstract form: a closed structure with a single break. Crimson marks the point of failure. -->
+    <svg class="geo" viewBox="0 0 600 600" aria-hidden="true" focusable="false">
+      <path class="bg" d="M0 100H600M0 200H600M0 300H600M0 400H600M0 500H600M100 0V600M200 0V600M300 0V600M400 0V600M500 0V600"/>
+      <path class="draw in" pathLength="1" d="M210 210H390V390H210Z"/>
+      <path class="draw" pathLength="1" d="M270 150H450V450H150V150H230"/>
+      <path class="draw in" pathLength="1" d="M150 450L210 390M450 450L390 390M450 150L390 210M150 150L210 210"/>
+      <rect class="break" x="246" y="146" width="8" height="8"/>
+    </svg>
+
+    <div class="wrap">
+      <img class="logo" src="logo.png" width="1000" height="89" alt="BLACKSCEPT">
+      <h1 id="hero-title">Understanding how systems break.</h1>
+      <p class="lede">BLACKSCEPT works at the intersection of offensive security and digital intelligence. It uncovers weaknesses, investigates digital threats, and turns technical insight into actionable security knowledge.</p>
+      <a class="cta" href="#research"><i aria-hidden="true"></i>Explore the work</a>
+    </div>
+  </section>
+
+  <!-- PHILOSOPHY -->
+  <section class="s" id="philosophy" aria-labelledby="h-phil">
+    <div class="wrap">
+      <h2 id="h-phil">Philosophy</h2>
+      <div>
+        <p class="lead">Those who understand how things break are best placed to protect them.</p>
+        <p>Every system fails somewhere. Knowing where, and why, is the difference between hoping something is secure and being able to show it. Security is built on an honest understanding of failure.</p>
+        <div class="cols" style="margin-top:3rem">
+          <div><h3>Research</h3><p>Questions come first. Conclusions follow the evidence.</p></div>
+          <div><h3>Precision</h3><p>Defined scope, exact methods, clear and measured reporting.</p></div>
+          <div><h3>Responsible application</h3><p>Offensive knowledge is used with permission, within limits, and in service of defense.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAPABILITIES -->
+  <section class="s" id="capabilities" aria-labelledby="h-cap">
+    <div class="wrap">
+      <h2 id="h-cap">Capabilities</h2>
+      <ul class="rows">
+        <li><h3>Web Application Security</h3><p>Examining how applications handle authentication, access control, input and state, and where their assumptions give way.</p></li>
+        <li><h3>Penetration Testing</h3><p>Authorised, structured testing that shows how weaknesses connect and what they could lead to, reported with clear remediation.</p></li>
+        <li><h3>Vulnerability Research</h3><p>Close study of software and protocols to find root causes, with findings handled through responsible disclosure.</p></li>
+        <li><h3>OSINT &amp; Digital Intelligence</h3><p>Collecting and verifying public information to map exposure, investigate threats and support decisions.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- RESEARCH & INTELLIGENCE -->
+  <section class="s" id="research" aria-labelledby="h-res">
+    <div class="wrap">
+      <h2 id="h-res">Research &amp; Intelligence</h2>
+      <div>
+        <p style="margin-bottom:2.5rem">A working record of the practice. Original work will be published here as it is completed.</p>
+        <!--
+          TO ADD A NEW ENTRY: copy one <li> below, change the title, text and status
+          (for example "May 2026"), and wrap the title in a link: <h3><a href="posts/my-post.html">Title</a></h3>
+          Then delete the matching "In preparation" row once you have real work to show.
+        -->
+        <ul class="rows research">
+          <li><h3>Write-ups</h3><p>Technical analyses of techniques, cases and methods.</p><span class="status">In preparation</span></li>
+          <li><h3>Findings</h3><p>Vulnerabilities and weaknesses, disclosed responsibly.</p><span class="status">In preparation</span></li>
+          <li><h3>Tools</h3><p>Utilities built and refined during research.</p><span class="status">In preparation</span></li>
+          <li><h3>Experiments</h3><p>Early tests and working notes.</p><span class="status">In preparation</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRINCIPLES -->
+  <section class="s" id="principles" aria-labelledby="h-pri">
+    <div class="wrap">
+      <h2 id="h-pri">Principles</h2>
+      <ul class="princ">
+        <li><h3>Precision</h3><p>Exact scope, exact methods, exact language.</p></li>
+        <li><h3>Discretion</h3><p>Findings and sensitive information are handled with care.</p></li>
+        <li><h3>Curiosity</h3><p>The habit of asking why something works, and what happens when it doesn't.</p></li>
+        <li><h3>Accountability</h3><p>Work is documented, authorised and answerable.</p></li>
+        <li><h3>Controlled capability</h3><p>Skill applied within clear limits and with clear permission.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="s close" id="contact" aria-labelledby="h-close">
+    <div class="wrap">
+      <h2 id="h-close"><span>Know the system.</span><span>Understand the weakness.</span><span>Strengthen what matters.</span></h2>
+      <!-- CHANGE THIS to your real email address -->
+      <a class="mail" href="mailto:contact@yourdomain.com">Get in touch</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>&copy; 2026 BLACKSCEPT</span>
+    <span>Offensive security &amp; digital intelligence</span>
+  </div>
+</footer>
+</body>
+</html>
